@@ -4,11 +4,7 @@ from matplotlib import pyplot as plt
 # from dwave_qbsolv import QBSolv
 from tabu import TabuSampler
 import dimod
-# from dwave.samplers import SimulatedAnnealingSampler
-
-# import os
-
-# os.environ['DWAVE_API_TOKEN'] = 'DEV-3889495598ef2e98f9c0317a7a0dc0a133cf85ce'
+# from dwave.samplers import SimulatedAnnealingSamplerW
 
 dwave_answers = []
 

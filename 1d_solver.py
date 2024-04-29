@@ -64,22 +64,14 @@ for test in range(len(data_values_list)):
         
     dwave_answers.append(-(response.first.energy + offset))
     
-    file_output_count.write(str(len(data_values_list[test])) + ' ')
+    file_output_count.write(str(len(data_values_list[test])) + '\n')
     
-    file_output_answers.write(str(-(response.first.energy + offset)) + ' ')
+    file_output_answers.write(str(-(response.first.energy + offset)) + '\n')
     
-    file_output_max_weight_constraint.write(str(max_weight) + ' ')
+    file_output_max_weight_constraint.write(str(max_weight) + '\n')
     
     for key in response.first[0]:
         if (response.first[0][key] == 1):
             file_output_spins.write(str(key) + ' ')
             
     file_output_spins.write('\n')
-    
-    file_output_answers.write('\n')
-    
-    file_output_count.write('\n')
-    
-    file_output_max_weight_constraint.write('\n')
-    
-    

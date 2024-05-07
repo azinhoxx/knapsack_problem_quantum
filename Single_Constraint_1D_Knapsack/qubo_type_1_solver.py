@@ -5,9 +5,9 @@ import time
 
 import qubo_type_1 as type_1
 
-def solver(data_weights_list, data_values_list, max_weight, lambd, num_reads):
+def solver(data, num_reads):
     
-    Q = type_1.build_qubo(data_weights_list, data_values_list, max_weight, lambd)
+    Q = type_1.build_qubo(data)
     
     bqm = BinaryQuadraticModel.from_qubo(Q)
     
@@ -17,7 +17,7 @@ def solver(data_weights_list, data_values_list, max_weight, lambd, num_reads):
     
     seconds_after = time.time()
     
-    offset = max_weight ** 2 * lambd
+    offset = data["max_weight"] ** 2 * data["first_lambda"]
     
     answer = -(response.first.energy + offset)
     

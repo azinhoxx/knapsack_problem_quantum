@@ -1,5 +1,7 @@
-import qubo_solver as solver
 import os
+
+import qubo_solver as solver
+import solver_graph as graph
 
 data = {}
 
@@ -20,19 +22,21 @@ input(data)
 assert(len(data["values"]) == len(data["weights"]))
 
 data["first_lambda"] = 10
-data["max_weight"] = 150
-data["max_cores"] = 48
+data["second_lambda"] = 100
+data["max_weight"] = 1024
+data["max_cores"] = 128
 data["num_items"] = len(data["values"])
 
-data["dwave_response"] = solver.qubo_solver(data, 1000)
+data["num_reads"] = 100000
 
-data["os_save_path"] = os.path.join(os.getcwd() + '\\Multi_Constraint_Knapsack\\data\\test_1\\')
+data["dwave_response"] = solver.qubo_solver(data, data["num_reads"])
+
+data["os_save_path"] = os.path.join(os.getcwd() + '\\Multi_Constraint_Knapsack\\data\\test_3\\')
 
 data["first_sample_data_vector"] = []
 
 for i in range(data["num_items"]):
     if (data["dwave_response"].first.sample.get(i) == 1):
         data["first_sample_data_vector"].append(i)
-
-file_to_save = open(data["os_save_path"] + 'test_1.txt', 'w')
-file_to_save.write(' '.join(str(item) for item in data["first_sample_data_vector"]) + '\n')
+        
+graph.build_graph(data, 5)

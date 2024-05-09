@@ -1,10 +1,11 @@
 from dimod import BinaryQuadraticModel
 from neal import SimulatedAnnealingSampler
 
-import qubo_builder as builder
+import qubo_builder as build
 
 def qubo_solver(data, num_reads):
-    Q, offset = builder.build_qubo(data)
+    
+    Q, offset = build.build_qubo(data)
     
     bqm = BinaryQuadraticModel.from_qubo(Q, offset=offset)
     

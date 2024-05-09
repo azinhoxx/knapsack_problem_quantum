@@ -1,18 +1,16 @@
+from random import randint
 
-## In process...
+# генерация стоимости предметов для одного рюкзака
+# далее считаем, что такая стоимость и в других для i-го предмета
+file_values = open('data_values.txt', 'w')
+file_weights = open('data_weights.txt', 'w')
 
-# from random import randint
+data_items_cnt = randint(1, 10)
+data_values = [randint(1, 10) for _ in range(data_items_cnt)]
+data_weights = [randint(1, 10) for _ in range(data_items_cnt)]
 
-# file_values = open('data_values.txt', 'w')
-# file_weights = open('data_weights.txt', 'w')
+file_values.write(' '.join(str(item) for item in data_values) + '\n')
+file_weights.write(' '.join(str(item) for item in data_weights) + '\n')
 
-# data_items_cnt = randint(5 * 1e2, 1e3)
-# data_values = [randint(1, 5 * 1e1) for _ in range(data_items_cnt)]
-# data_weights = [randint(20, 50) for _ in range(data_items_cnt)]
-# file_values.write(' '.join(str(item) for item in data_values) + '\n')
-# file_weights.write(' '.join(str(item) for item in data_weights) + '\n')
-
-# file_weights.close()
-# file_values.close()
-
-## In process...
+file_weights.close()
+file_values.close()

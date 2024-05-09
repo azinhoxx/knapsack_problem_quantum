@@ -2,7 +2,7 @@ import numpy as np
 from itertools import combinations
 
 def build_qubo(data):
-        data_max_weights_list = np.array(data_max_weights_list)
+        data_max_weights_list = np.array(data["max_weights"])
     
         num_knapsacks = len(data_max_weights_list)
         
@@ -10,6 +10,9 @@ def build_qubo(data):
     
         data_weights_array = data["weights"]
         
+        # создаём для удобства двумерный массив, где v_ij = v_i
+        # для более широкой постановки можно изменить реализацию
+        # на произвольные веса для каждого из рюкзаков
         data_values_array = [data["values"] for _ in range(num_knapsacks)]
     
         # определяем соответствующие коэффициенты
@@ -17,8 +20,6 @@ def build_qubo(data):
         alpha = 2 * np.max(np.concatenate(data_values_array).ravel())
         gamma = 1 
     
-        print(data_values_array)
-
         # количество дополнительных битов для каждого рюкзака по отдельности
         num_slack_bits = (np.floor(np.log2(data_max_weights_list)) + 1).astype(int)
         

@@ -22,7 +22,7 @@ def build_qubo(data):
     
     for i in range(total_count_of_slack_bits):
         # заполнение диагонали
-        Q[i][i] += -data_values_array[i] 
+        Q[i][i] += -data_values_array[i]
         Q[i][i] += -data["first_lambda"] * data_weights_array[i] * (2 * data["max_weight"] - data_weights_array[i])
         Q[i][i] += -data["second_lambda"] * data_cores_array[i] * (2 * data["max_cores"] - data_cores_array[i])
         for j in range(i + 1, total_count_of_slack_bits):

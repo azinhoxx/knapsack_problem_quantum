@@ -33,7 +33,7 @@ data_graph["first_qubo_percents"] = []
 data_graph["first_qubo_timer"] = []
 data_graph["num_reads"] = []
 
-data["os_save_path"] = os.path.join(os.getcwd() + '\\Single_Constraint_1D_Knapsack\\data\\test_3')
+data["os_save_path"] = os.path.join(os.getcwd() + '\\SCSK\\data\\test_3')
 
 # запускаем тестирование
 for test_i in range(1, 2): 

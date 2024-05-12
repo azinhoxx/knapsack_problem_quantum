@@ -31,7 +31,7 @@ data["num_reads"] = 100000
 
 data["dwave_response"] = solver.qubo_solver(data, data["num_reads"])
 
-data["os_save_path"] = os.path.join(os.getcwd() + '\\Multi_Constraint_Knapsack\\data\\test_3\\')
+data["os_save_path"] = os.path.join(os.getcwd() + '\\MCSK\\data\\test_3\\')
 
 data["first_sample_data_vector"] = []
 

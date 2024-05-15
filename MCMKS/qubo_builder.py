@@ -10,7 +10,6 @@ def build_qubo(data):
         
         num_items = data["num_items"]
     
-    
         # создаём для удобства двумерный массив
         # для более широкой постановки можно изменить реализацию
         # на произвольные значения для каждого из рюкзаков
@@ -19,10 +18,14 @@ def build_qubo(data):
         data_cores_array = [data["cores"] for _ in range(num_knapsacks)]
         
         # определяем соответствующие коэффициенты
-        betta_1 = 2 * np.max(np.concatenate(data_space_array).ravel()) + 1
-        betta_2 = 2 * np.max(np.concatenate(data_memory_array).ravel()) + 1
-        betta_3 = 2 * np.max(np.concatenate(data_cores_array).ravel()) + 1
-        alpha = max(betta_1, betta_2, betta_3)
+        # betta_1 = 2 * np.max(np.concatenate(data_space_array).ravel()) + 1
+        # betta_2 = 2 * np.max(np.concatenate(data_memory_array).ravel()) + 1
+        # betta_3 = 2 * np.max(np.concatenate(data_cores_array).ravel()) + 1
+        # alpha = max(betta_1, betta_2, betta_3)
+        betta_1 = 10
+        betta_2 = 10
+        betta_3 = 10
+        alpha = 10
         gamma = 1 
     
         # количество дополнительных битов для каждого рюкзака по отдельности

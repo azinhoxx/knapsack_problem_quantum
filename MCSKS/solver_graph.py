@@ -1,7 +1,6 @@
 import os
 import matplotlib.pyplot as plt
-import matplotlib.patches as mpatches
-import matplotlib.lines as mlines
+from colour import Color
 
 def build_graph(data, num_test):
     chosen_items = data["first_sample_data_vector"]
@@ -10,70 +9,56 @@ def build_graph(data, num_test):
     cores = [data["cores"][i] for i in chosen_items]
     memory = [data["memory"][i] for i in chosen_items]
             
-    # Категории
+    fig, axs = plt.subplots(1, 3)
+    
     categories = ['Диск', 'Ядра', 'Память']
-    color = ['#FFB836', '#009B00', '#9C9CFF']
 
-    plt.bar(categories[0], data["max_space"], color='white', edgecolor='red')
+    yellow = Color("#FFB28B")
+    green = Color("#77DD77")
+    colors = list(yellow.range_to(green, len(space))) 
     
-    plt.bar(categories[1], data["max_cores"], color='white', edgecolor='red')
+    axs[0].bar(categories[0], data["max_space"], color='white', edgecolor='red')
     
-    plt.bar(categories[2], data["max_memory"], color='white', edgecolor='red')
+    axs[1].bar(categories[1], data["max_cores"], color='white', edgecolor='red')
     
-    bottom_values = [sum(space) / len(space), sum(cores) / len(cores), sum(memory) / len(memory)]
-
-    # Построение столбчатой диаграммы с накоплением
+    axs[2].bar(categories[2], data["max_memory"], color='white', edgecolor='red')
+    
+    edge_color = 'black'
+    
+    if (len(space) >= 40):
+        edge_color = 'none'
     
     bottom = 0
+    
     for i in range(len(space)):
-        if i % 2 == 0:
-            plt.bar(categories[0], bottom_values[0], bottom=bottom, edgecolor='black', color=color[0])
-        else:
-            plt.bar(categories[0], bottom_values[0], bottom=bottom, edgecolor='black', color=color[1])
-        bottom += bottom_values[0]
+        axs[0].bar(categories[0], space[i], bottom=bottom, edgecolor=edge_color, color=colors[i].get_hex_l())
+        bottom += space[i]
         
-    plt.text(0, data["max_space"] + 2, f"{sum(space)} из {data['max_space']}", ha = 'center')
+    axs[0].text(0, data["max_space"] + data["max_space"] * 0.01, f"{sum(space)} из {data['max_space']}", ha = 'center')
     
     bottom = 0
-    for _ in range(len(cores)):
-        plt.bar(categories[1], bottom_values[1], bottom=bottom, edgecolor='black')
-        bottom += bottom_values[1]
+    for i in range(len(cores)):
+        axs[1].bar(categories[1], cores[i], bottom=bottom, edgecolor=edge_color, color=colors[i].get_hex_l())
+        bottom += cores[i]
         
-    plt.text(1, data["max_cores"] + 2, f"{sum(cores)} из {data['max_cores']}", ha = 'center')
+    axs[1].text(0, data["max_cores"] + data["max_cores"] * 0.01, f"{sum(cores)} из {data['max_cores']}", ha = 'center')
 
     bottom = 0
     for i in range(len(memory)):
-        if i % 3 == 0:
-            plt.bar(categories[2], bottom_values[2], bottom=bottom, edgecolor='black', color=color[0])
-        elif i % 3 == 1:
-            plt.bar(categories[2], bottom_values[2], bottom=bottom, edgecolor='black', color=color[1])
-        else:
-            plt.bar(categories[2], bottom_values[2], bottom=bottom, edgecolor='black', color=color[2])
-        bottom += bottom_values[2]
+        axs[2].bar(categories[2], memory[i], bottom=bottom, edgecolor=edge_color, color=colors[i].get_hex_l())
+        bottom += memory[i]
 
-    plt.text(2, data["max_memory"] + 2, f"{sum(memory)} из {data['max_memory']}", ha = 'center')
+    axs[2].text(0, data["max_memory"] + data["max_memory"] * 0.01, f"{sum(memory)} из {data['max_memory']}", ha = 'center')
 
-    constraint = False
     if (sum(space) > data["max_space"]):
-        plt.bar(categories[0], sum(space) - data["max_space"], bottom=data["max_space"], edgecolor='black', color='red')
-        constraint = True
+        axs[0].bar(categories[0], sum(space) - data["max_space"], bottom=data["max_space"], edgecolor='black', color='red')
     if (sum(cores) > data["max_cores"]):
-        plt.bar(categories[1], sum(cores) - data["max_cores"], bottom=data["max_cores"], edgecolor='black', color='red')
-        constraint = True
+        axs[1].bar(categories[1], sum(cores) - data["max_cores"], bottom=data["max_cores"], edgecolor='black', color='red')
     if (sum(memory) > data["max_memory"]):
-        plt.bar(categories[2], sum(memory) - data["max_memory"], bottom=data["max_memory"], edgecolor='black', color='red')
-        constraint = True
+        axs[2].bar(categories[2], sum(memory) - data["max_memory"], bottom=data["max_memory"], edgecolor='black', color='red')
 
-    plt.ylabel('Значение')
-    plt.title(f"Распределение ресурсов на сервере. Количество задач: {data['num_items']}. Значение num_reads: {data['num_reads']}")
+    plt.suptitle(f"Распределение ресурсов на сервере. Количество задач: {data['num_items']}. Значение num_reads: {data['num_reads']}. Время работы: {data['response_time']} s. \n $\lambda_1$ = {data['first_lambda']}, $\lambda_2$ = {data['second_lambda']}, $\lambda_3$ = {data['third_lambda']}")
     
-    orange_rectangle = mpatches.Rectangle((0, 0), 1, 1, fc="orange", edgecolor='black')
-    if constraint == False:
-        red_line = mlines.Line2D([0, 1], [0, 0], color='red', linestyle='-')
-        plt.legend(handles=[red_line, orange_rectangle], labels=['Ограничение', 'Параметр i-й задачи'], loc='upper right')
-    if constraint == True:
-        red_rectangle = mpatches.Rectangle((0, 0), 1, 1, fc="red", edgecolor='black')
-        plt.legend(handles=[red_rectangle, orange_rectangle], labels=['Превышение', 'Параметр i-й задачи'], loc='upper right')
-
-    plt.show()
-    # plt.savefig(os.path.join(data["os_save_path"] + f"\\autosave_fig_lambda_test_{num_test}.png"), format="png")
+    fig.set_size_inches(19.20, 10.80)
+    
+    plt.savefig(os.path.join(data["os_save_path"] + f"\\autosave_fig_test_{num_test}.png"), format="png")

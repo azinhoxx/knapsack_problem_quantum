@@ -26,9 +26,9 @@ data["first_lambda"] = 10
 data["second_lambda"] = 10
 data["third_lambda"] = 10
 
-data["max_space"] = 150
-data["max_cores"] = 64
-data["max_memory"] = 120
+data["max_space"] = 10240
+data["max_cores"] = 960
+data["max_memory"] = 5120
 
 data["num_items"] = len(data["cores"])
 
@@ -36,7 +36,7 @@ data["num_reads"] = 1000
 
 data["dwave_response"] = solver.qubo_solver(data)
 
-data["os_save_path"] = os.path.join(os.getcwd() + '\\MCSKS\\data\\test_1\\')
+data["os_save_path"] = os.path.join(os.getcwd() + '\\MCSKS\\data\\test_2\\')
 
 data["first_sample_data_vector"] = []
 

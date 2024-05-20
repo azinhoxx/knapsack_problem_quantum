@@ -1,6 +1,5 @@
 from dimod import BinaryQuadraticModel
 from neal import SimulatedAnnealingSampler
-from tabu import TabuSampler
 import time
 
 import qubo_builder as builder
